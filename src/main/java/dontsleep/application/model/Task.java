@@ -1,21 +1,41 @@
 package dontsleep.application.model;
 
-public class Task {
+import dontsleep.application.model.Anotation.FieldAnotation;
+import dontsleep.application.model.Anotation.TableAnotation;
+
+@TableAnotation(tableName = "task")
+public class Task extends Model{
+
+    @FieldAnotation(fieldName = "id", isAutoIncrement = true)
     private int id;
+
+    @FieldAnotation(fieldName = "billid")
     private int billId;
+
+    @FieldAnotation(fieldName = "itemid")
     private int itemId;
+
+    @FieldAnotation(fieldName = "quantity")
     private int quantity;
+
+    @FieldAnotation(fieldName = "timestamp")
     private long timestamp;
+
+    @FieldAnotation(fieldName = "note")
     private String note;
-    private ETaskStatus status;
-    public Task(int id, int billId, int itemId, int quantity, long timestamp, String note, ETaskStatus status) {
-        this.id = id;
+
+    @FieldAnotation(fieldName = "status")
+    private String status;
+
+    public Task() {}
+
+    public Task(int billId, int itemId, int quantity, long timestamp, String note, ETaskStatus status) {
         this.billId = billId;
         this.itemId = itemId;
         this.quantity = quantity;
         this.timestamp = timestamp;
         this.note = note;
-        this.status = status;
+        this.status = status.getStatus();
     }
     public int getId() {
         return id;
@@ -36,10 +56,10 @@ public class Task {
         return note;
     }
     public ETaskStatus getStatus() {
-        return status;
+        return ETaskStatus.fromString(this.status);
     }
     public void setStatus(ETaskStatus status) {
-        this.status = status;
+        this.status = status.getStatus();
     }
     public void setQuantity(int quantity) {
         this.quantity = quantity;

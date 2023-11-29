@@ -1,17 +1,38 @@
 package dontsleep.application.model;
 
-public class Item {
+import dontsleep.application.model.Anotation.FieldAnotation;
+import dontsleep.application.model.Anotation.TableAnotation;
+
+@TableAnotation(tableName = "items")
+public class Item extends Model{
+
+    @FieldAnotation(fieldName = "id", isAutoIncrement = true)
     private int id;
+
+    @FieldAnotation(fieldName = "name")
     private String name;
+
+    @FieldAnotation(fieldName = "description")
     private String description;
-    private ItemType type;
+
+    @FieldAnotation(fieldName = "type")
+    private int type;
+
+    @FieldAnotation(fieldName = "price")
     private int price;
+
+    @FieldAnotation(fieldName = "isAvailable")
     private boolean isAvailable;
+
+    @FieldAnotation(fieldName = "image")
     private String image;
-    public Item(int id, String name, String description, ItemType type, int price, boolean isAvailable, String image) {
+
+    public Item() {}
+
+    public Item(String name, String description, ItemType type, int price, boolean isAvailable, String image) {
         this.name = name;
         this.description = description;
-        this.type = type;
+        this.type = type.getId();
         this.price = price;
         this.isAvailable = isAvailable;
         this.image = image;
@@ -25,7 +46,7 @@ public class Item {
     public String getDescription(){
         return description;
     }
-    public ItemType getType() {
+    public int getType() {
         return type;
     }
     public int getPrice() {

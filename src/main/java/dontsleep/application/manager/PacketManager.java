@@ -2,6 +2,8 @@ package dontsleep.application.manager;
 
 import java.util.ArrayList;
 
+import dontsleep.application.packet.CPacket.CPacketLogin;
+import dontsleep.application.packet.SPacket.SPacketLogin;
 import dontsleep404.library.DClient;
 import dontsleep404.library.event.EventHandle;
 import dontsleep404.library.event.EventPacket;
@@ -12,24 +14,25 @@ public class PacketManager extends EventHandle{
     public PacketManager() {
         super(new ArrayList<Class<? extends Packet>>(){
             {
-
+                add(CPacketLogin.class);
+                add(SPacketLogin.class);
             }
         });
     }
 
     @Override
     public void onConnect(EventPacket arg0) {
-        //
+        System.out.println(arg0.getClient().hashCode() + " connected");
     }
 
     @Override
     public void onDisconnect(EventPacket arg0) {
-        // 
+        System.out.println(arg0.getClient().hashCode() + " disconnected");
     }
 
     @Override
     public void onPacketReceived(DClient arg0, Packet arg1) {
-        String proc = "dontsleep.application.manager.process.Process" + arg1.getClass().getSimpleName();
+        String proc = arg1.getClass().getPackageName() + ".process.Process" + arg1.getClass().getSimpleName();
         try{
             Class<?> c = Class.forName(proc);
             c.getConstructor(DClient.class, arg1.getClass()).newInstance(arg0, arg1);

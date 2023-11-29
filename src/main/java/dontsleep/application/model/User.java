@@ -1,23 +1,39 @@
 package dontsleep.application.model;
 
-public class User {
+import dontsleep.application.model.Anotation.FieldAnotation;
+import dontsleep.application.model.Anotation.TableAnotation;
+
+@TableAnotation(tableName = "users")
+public class User extends Model{
+
+    @FieldAnotation(fieldName = "id", isAutoIncrement = true)
     private int id;
+
+    @FieldAnotation(fieldName = "username")
     private String username;
+
+    @FieldAnotation(fieldName = "password")
     private String password;
+
+    @FieldAnotation(fieldName = "name")
     private String name;
-    private EUserRole role;
+
+    @FieldAnotation(fieldName = "role")
+    private int role;
+
+    public User() {}
 
     public User(String name) {
         this.id = 0;
         this.name = name;
-        role = EUserRole.GUEST;
+        role = EUserRole.GUEST.getId();
     }
-    public User(int id, String username, String password, String name, EUserRole role) {
-        this.id = id;
+
+    public User(String username, String password, String name, EUserRole role) {
         this.username = username;
         this.password = password;
         this.name = name;
-        this.role = role;
+        this.role = role.getId();
     }
 
     public int getId() {
@@ -37,7 +53,7 @@ public class User {
     }
 
     public EUserRole getRole() {
-        return role;
+        return EUserRole.getRoleById(this.role);
     }
 
     public void setName(String name) {

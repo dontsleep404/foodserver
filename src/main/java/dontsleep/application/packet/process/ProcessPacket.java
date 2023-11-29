@@ -1,4 +1,4 @@
-package dontsleep.application.manager.process;
+package dontsleep.application.packet.process;
 
 import dontsleep404.library.DClient;
 import dontsleep404.library.packet.Packet;

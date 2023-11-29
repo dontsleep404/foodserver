@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class DatabaseHelper {
 
@@ -17,7 +18,7 @@ public class DatabaseHelper {
 
     public DatabaseHelper() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(url, username, password);
             isConnected = true;
         } catch (Exception e) {
@@ -47,17 +48,24 @@ public class DatabaseHelper {
         }
     }
 
-    public boolean executeUpdate(String query, Object... params) {
+    public int executeUpdate(String query, Object... params) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             for (int i = 0; i < params.length; i++) {
                 preparedStatement.setObject(i + 1, params[i]);
             }
-            return preparedStatement.executeUpdate() > 0;
+
+            if (preparedStatement.executeUpdate() == 0)
+                return 0;
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+
+            if (resultSet.next())
+                return resultSet.getInt(1);
+
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
+        return 0;
     }
 
     public boolean isConnected() {

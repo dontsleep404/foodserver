@@ -12,15 +12,11 @@ public class Manager {
         if (databaseHelper.isConnected()) {
             System.out.println("Connected to database");
             dataManager = new DataManager();
-            start();
         }else{
             System.err.println("Can't connect to database");
+            System.exit(0);
         }
     }
-    public void start(){
-
-    }
-
     public DataManager getDataManager() {
         return dataManager;
     }

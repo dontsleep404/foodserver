@@ -17,15 +17,20 @@ public class ProcessCPacketLogin extends ProcessPacket<CPacketLogin>{
 
     @Override
     public void process() {
-        ArrayList<User> users = Model.findBy(User.class, "username = ? and password = ?", getPacket().username, getPacket().password);
         SPacketLogin packet = new SPacketLogin();
-        if(users.size() > 0){            
-            packet.username = getPacket().username;
-            packet.role = users.get(0).getRole().getId();
+        if(getPacket().isGuest == true){
+            packet.username = "Guest";
+            packet.role = 0;
             packet.success = true;
+        }else{
+            ArrayList<User> users = Model.findBy(User.class, "username = ? and password = ?", getPacket().username, getPacket().password);
+            if(users.size() > 0){            
+                packet.username = getPacket().username;
+                packet.role = users.get(0).getRole().getId();
+                packet.success = true;
+            }
         }
         getClient().sendPacket(packet);
-        System.out.println(packet);
     }
     
 }

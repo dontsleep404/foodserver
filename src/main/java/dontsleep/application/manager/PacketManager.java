@@ -2,6 +2,7 @@ package dontsleep.application.manager;
 
 import java.util.ArrayList;
 
+import dontsleep.application.Main;
 import dontsleep.application.packet.CPacket.*;
 import dontsleep.application.packet.SPacket.*;
 import dontsleep404.library.DClient;
@@ -18,18 +19,25 @@ public class PacketManager extends EventHandle{
                 add(SPacketLogin.class);
                 add(CPacketInit.class);
                 add(SPacketInit.class);
+                add(CPacketAddItem.class);
+                add(SPacketAddItemRes.class);
+                add(SPacketUpdateMenu.class);
+                add(CPacketEditItem.class);
+                add(SPacketEditItemRes.class);
+                add(CPacketOrderItem.class);
+                add(SPacketAddItemToBill.class);
             }
         });
     }
 
     @Override
     public void onConnect(EventPacket arg0) {
-        System.out.println(arg0.getClient().hashCode() + " connected");
+
     }
 
     @Override
     public void onDisconnect(EventPacket arg0) {
-        System.out.println(arg0.getClient().hashCode() + " disconnected");
+        Main.manager.getDataManager().deleteUser(arg0.getClient());
     }
 
     @Override

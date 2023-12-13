@@ -168,7 +168,37 @@ public class Model {
                 query += " WHERE id = ?";
                 params.add(id);
                 int i = manager.getDatabaseHelper().executeUpdate(query, params.toArray());
-                if (i > 0) {
+                if (i == 0) {
+                    return true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    public boolean delete() {
+        if (!getClass().isAnnotationPresent(TableAnotation.class))
+            return false;
+        String tableName = getClass().getAnnotation(TableAnotation.class).tableName();
+        String fieldName = "id";
+        Field fieldId = null;
+        for (Field field : getClass().getDeclaredFields()) {
+            if (field.isAnnotationPresent(FieldAnotation.class)) {
+                FieldAnotation fieldAnotation = field.getAnnotation(FieldAnotation.class);
+                if (fieldAnotation.isAutoIncrement()) {
+                    fieldId = field;
+                    fieldName = fieldAnotation.fieldName();
+                }
+            }
+        }
+        String query = "DELETE FROM " + tableName + " WHERE " + fieldName + " = ?";
+        if (fieldId != null) {
+            try {
+                fieldId.setAccessible(true);
+                int i = manager.getDatabaseHelper().executeUpdate(query, fieldId.get(this));
+                if (i == 0) {
                     return true;
                 }
             } catch (Exception e) {

@@ -21,6 +21,9 @@ public class User extends Model{
     @FieldAnotation(fieldName = "role")
     private int role;
 
+    public String tableId;
+    public Bill bill;
+
     public User() {}
 
     public User(String name) {

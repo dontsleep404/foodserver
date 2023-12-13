@@ -58,4 +58,24 @@ public class Item extends Model{
     public String getImage() {
         return image;
     }
+
+    //setter
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public void setType(int type) {
+        this.type = type;
+    }
+    public void setPrice(int price) {
+        this.price = price;
+    }
+    public void setIsAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
+    }
+    public void setImage(String image) {
+        this.image = image;
+    }
 }

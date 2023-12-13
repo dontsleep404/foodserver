@@ -25,7 +25,9 @@ public class PacketManager extends EventHandle{
                 add(CPacketEditItem.class);
                 add(SPacketEditItemRes.class);
                 add(CPacketOrderItem.class);
-                add(SPacketAddItemToBill.class);
+                add(SPacketAddItemToBill.class);                
+                add(SPacketUpdateOrder.class);
+                add(CPacketUpdateOrder.class);
             }
         });
     }

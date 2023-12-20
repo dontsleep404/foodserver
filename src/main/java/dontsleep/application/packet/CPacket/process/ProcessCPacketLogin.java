@@ -27,7 +27,7 @@ public class ProcessCPacketLogin extends ProcessPacket<CPacketLogin>{
         SPacketLogin packet = new SPacketLogin();
         if(getPacket().isGuest == true){
             packet.username = "Guest";
-            packet.role = 0;
+            packet.role = EUserRole.GUEST.getId();
             packet.success = true;
             
             User user = new User();

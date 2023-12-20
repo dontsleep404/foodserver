@@ -1,7 +1,7 @@
 package dontsleep.application;
 
 import dontsleep.application.manager.Manager;
-import dontsleep.application.manager.PacketManager;
+import dontsleep.application.packet.PacketManager;
 import dontsleep404.library.DServer;
 
 public class Main{

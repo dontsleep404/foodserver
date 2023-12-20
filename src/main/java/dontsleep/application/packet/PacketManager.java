@@ -1,4 +1,4 @@
-package dontsleep.application.manager;
+package dontsleep.application.packet;
 
 import java.util.ArrayList;
 
